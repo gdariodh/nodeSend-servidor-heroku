@@ -40,7 +40,7 @@ exports.nuevoEnlace = async (req, res, next) => {
   try {
     await enlace.save();
     return res.json({ msg: `${enlace.url}` });
-    next();
+    //next();
   } catch (error) {
     console.log(error);
     res.status(500).json({ msg: "Hubo un error en la creacion del enlace" });
@@ -68,12 +68,9 @@ exports.tienePassword = async (req, res, next) => {
     return res.json({
       password: true,
       archivo: enlace.nombre,
-      url: enlace.url,
-      descargas: enlace.descargas,
+      url: enlace.url
     });
   }
-
-  // TODO: retornamos las descargas para manejar las descargas en la interfaz
 
   // TODO: si enlace no tiene password, ira al siguiente controlador "obtenerEnlace" que retorna el archivo para usarlo
   // en el endpoint de descargar archivo
@@ -115,12 +112,11 @@ exports.obtenerEnlace = async (req, res, next) => {
   // Si existe, retornar el nombre del archivo que es enlace.nombre
   res.json({
     password: false,
-    archivo: enlace.nombre,
-    descargas: enlace.descargas,
+    archivo: enlace.nombre
   });
   // TODO: ponemos password false por cuestiones de interfaz, para manejar interfaces con el frontend
   // ya que si no se deja en false, si el usuario pasa la validacion, seguiria mostrando el pedir password y no pasaria
-  // hacia la otra interfaz. archivo para usarlo en el endpoint de descargarArchivo y descargas para manejar las descargas
+  // hacia la otra interfaz. archivo para usarlo en el endpoint de descargarArchivo.
   // en la interfaz!
 
   // que se vaya al siguiente controlador, obviamente si hay en algun caso alguno, TODO: si no hace nada.
