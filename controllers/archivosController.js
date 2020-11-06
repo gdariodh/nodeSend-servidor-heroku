@@ -36,7 +36,9 @@ exports.subirArchivo = async (req, res, next) => {
       res.json({ archivo: req.file.filename });
     } else {
       console.log(error);
-      res.status(500).json({ msg: "Hubo un error en la subida del archivo, intentalo de nuevo" });
+      res.status(500).json({
+        msg: "Hubo un error en la subida del archivo, intentalo de nuevo",
+      });
       return next();
     }
   });
@@ -57,11 +59,14 @@ exports.eliminarArchivo = async (req, res) => {
 // Agregado cuando implementamos la interfaz de descargar archivo en el frontend
 exports.descargarArchivo = async (req, res, next) => {
   // extraemos el archivo que se paso desde frontend por los parametros
+
+  console.log(req.params);
+
   const nombre_archivo = req.params.archivo;
   // luego buscamos el archivo en la carpeta uploads, que tambien es la carpeta publica ahora
   // TODO: la carpeta uploads la habilitamos en el index en la linea 30
   // se busca el archivo en la carpeta uploads
-  const archivo = __dirname + "/../uploads/" + nombre_archivo;
+  const archivo = __dirname + "/../uploads/" + req.params.archivo;
 
   // activamos la descarga y se descargara el archivo automaticamente!
   res.download(archivo);
